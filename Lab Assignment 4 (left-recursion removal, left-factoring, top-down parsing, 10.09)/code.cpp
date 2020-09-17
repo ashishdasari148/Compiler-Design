@@ -260,7 +260,7 @@ int main(){
     bool reached = false;
     traverse(&reached, 0, tokens, leaves_of_parse_tree, list_of_symbols, productions, &tree, name_to_id);
     if(reached==true){
-        cout << "Here is your parse tree" << endl;
+        cout << endl << "Here is your parse tree" << endl;
         for(int i=tree.size()-1;i>=0;i--){
             for(int j=0;j<tree[i].size();j++){
                 cout << list_of_symbols[tree[i][j]].name << " ";
@@ -269,7 +269,7 @@ int main(){
         }
     }
     else{
-        cout << "Hahaha... You lost your dare, There is no second chance in this..." << endl;
+        cout << endl << "Hahaha... You lost your dare, There is no second chance in this..." << endl;
     }
     return 0;
 }
