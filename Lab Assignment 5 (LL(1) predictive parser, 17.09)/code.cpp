@@ -218,6 +218,12 @@ int main() {
                             vector<int> temp1(k->begin()+maxmatch, k->end());
                             if(temp1.size())
                                 productions[list_of_symbols.size()-1].push_back(temp1);
+                            else
+                            {
+                                temp1.push_back(name_to_id["epsilon"]);
+                                productions[list_of_symbols.size()-1].push_back(temp1);
+                            }
+                            
                             // tempproduction.push_back(temp1);
                             k--;
                             // if(k==j)
