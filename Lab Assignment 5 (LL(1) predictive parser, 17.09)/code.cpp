@@ -298,15 +298,27 @@ int main() {
     start_i = name_to_id[start_s];
     vector<unordered_set<int>> first(list_of_symbols.size(), unordered_set<int>());
     vector<unordered_set<int>> follow(list_of_symbols.size(), unordered_set<int>());
+    int first_size_prev[list_of_symbols.size()];
+    memset(first_size_prev, 0, sizeof(first_size_prev));
+    do{
+        doer = false;
+        for(int i=0;i<list_of_symbols.size();i++){
+            if(first[i].size()==0){
+                if(list_of_symbols[i].is_terminal){
+                    first[i].insert(list_of_symbols[i].id);
+                    doer = true;
+                    break;
+                }
+                findfirst(list_of_symbols, i, productions, &first, name_to_id);
+                doer = true;
+                break;
+                // cout << " First size() : " << first[productions[i][0][0]].size() << endl;
+                // break;
+            }
+            
+        }
+    }while(doer);
     for(int i=0;i<list_of_symbols.size();i++){
-        if(list_of_symbols[i].is_terminal){
-            first[i].insert(list_of_symbols[i].id);
-        }
-        else if(first[i].size()==0){
-            findfirst(list_of_symbols, i, productions, &first, name_to_id);
-            // cout << " First size() : " << first[productions[i][0][0]].size() << endl;
-            // break;
-        }
         cout << endl << "FIRST(" << list_of_symbols[i].name << ") : ";
         for(auto j=first[i].begin();j!=first[i].end();j++){
             cout << list_of_symbols[*j].name << " ";
