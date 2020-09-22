@@ -30,6 +30,59 @@ void findfirst(vector<symbols> list_of_symbols, int firstof, unordered_map<int,v
     //     cout << list_of_symbols[*j].name << " ";
     // }
 }
+void stackprint(stack<int> s, vector<symbols> list_of_symbols){
+    while(!s.empty()){
+        cout << list_of_symbols[s.top()].name << " ";
+        s.pop();
+    }
+    cout << endl;
+}
+bool simulate(vector<vector<vector<int>*>>&parse_table,vector<symbols>& list_of_symbols,unordered_map<string,int>& name_to_id,int start_i){
+    stack<int>s;
+    s.push(name_to_id["eof"]);
+    s.push(start_i);
+    int token=yylex();
+    bool input_exhausted=false;
+    while(s.top()!=name_to_id["eof"]||!input_exhausted){
+        cout<<"Input Symbol:\t"<<list_of_symbols[token].name << "\t";
+        stackprint(s, list_of_symbols);
+        if(list_of_symbols[s.top()].is_terminal){
+            if(s.top()==token){
+                s.pop();
+                if(token=yylex()){}
+                else input_exhausted=true;
+            }
+            else{
+                if(s.top()==name_to_id["epsilon"]){
+                    s.pop();
+                }
+                else{
+                    cout<<"ERROR_STACK_TOP_TERMINAL_INPUT_NO_MATCH"<<endl;
+                    return false;
+                }
+            }
+        }
+        else{
+            if(parse_table[s.top()][token]==NULL){
+                cout<<"ERROR_PARSE_TABLE_ENTRY_NULL"<<endl;
+                return false;
+            }
+            else{
+                int t=s.top();s.pop();
+                vector<int>* it=parse_table[t][token];
+                int n=(int)(*it).size();
+                // cout<<list_of_symbols[t].name<<" replaced with ";
+                // for(int i=0;i<n;i++) cout<<list_of_symbols[(*it)[i]].name<<" ";cout<<"on top of stack"<<endl;
+                for(int i=n-1;i>=0;i--){
+                    s.push((*it)[i]);
+                }
+            }
+        }
+    }
+    if(s.top()==name_to_id["eof"]&&input_exhausted) return true;
+    cout<<s.size()<<" "<<input_exhausted<<endl;
+    return false;
+}
 int main() {
     int number_of_symbols;
     unordered_map<string,int> name_to_id;
@@ -413,17 +466,20 @@ int main() {
             }
         }
     }
-    cout << endl;
+
     vector<int> tokens;
     int token;
     yyin=fopen("inputfile.txt","r");
-    while ((token=yylex())!=0){
+    /*while ((token=yylex())!=0){
         cout << token << "\t" << yytext << endl;
         tokens.push_back(token);
     }
     tokens.push_back(name_to_id["eof"]);
     for(int i=0;i<tokens.size();i++)
         cout << tokens[i] << " ";
-    cout << endl;
+    cout << endl;*/
+    cout<<"check\n";
+    bool ans=simulate(parse_table,list_of_symbols,name_to_id,start_i);
+    cout<<ans<<endl;
     return 0;
 }
