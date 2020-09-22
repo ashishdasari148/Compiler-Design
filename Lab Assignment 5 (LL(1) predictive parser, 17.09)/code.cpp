@@ -413,7 +413,7 @@ int main() {
             }
         }
     }
-
+    cout << endl;
     vector<int> tokens;
     int token;
     yyin=fopen("inputfile.txt","r");
