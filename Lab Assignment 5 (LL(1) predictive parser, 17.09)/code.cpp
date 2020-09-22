@@ -365,15 +365,65 @@ int main() {
         }
     }
     cout << endl;
-    // vector<int> tokens;
-    // int token;
-    // yyin=fopen("inputfile.txt","r");
-    // while ((token=yylex())!=0){
-    //     cout << token << "\t" << yytext << endl;
-    //     tokens.push_back(token);
-    // }
-    // tokens.push_back(name_to_id["eof"]);
-    // for(int i=0;i<tokens.size();i++)
-    //     cout << tokens[i] << " ";
-    // return 0;
+    vector<vector<vector<int>*>>parse_table(list_of_symbols.size(),vector<vector<int>*>(list_of_symbols.size(),NULL));
+    bool is_LL1 = true;
+    for(auto k=productions.begin();k!=productions.end();k++){
+        for(int i=0;i<k->second.size();i++){
+            unordered_set<int> tempset;
+            tempset.insert(name_to_id["epsilon"]);
+            for(int position = 0; position<k->second[i].size()&&tempset.find(name_to_id["epsilon"])!=tempset.end();position++){                
+                tempset.erase(tempset.find(name_to_id["epsilon"]));
+                tempset.insert(first[k->second[i][position]].begin(), first[k->second[i][position]].end());
+            }
+            if(tempset.find(name_to_id["epsilon"])!=tempset.end()){
+                tempset.erase(tempset.find(name_to_id["epsilon"]));
+                for(auto j=follow[k->first].begin();j!=follow[k->first].end();j++){
+                    if(parse_table[k->first][*j]==NULL)
+                        parse_table[k->first][*j] = &(k->second[i]);
+                    else
+                        is_LL1 = false;
+                }
+            }
+            for(auto j=tempset.begin();j!=tempset.end();j++){
+                if(parse_table[k->first][*j]==NULL)
+                    parse_table[k->first][*j] = &(k->second[i]);
+                else
+                    is_LL1 = false;
+            }
+        }
+    }
+    if(!is_LL1){
+        cout << "The Grammar is not LL(1)... \n";
+        return 0;
+    }
+    cout << "\nHere is your parse table";
+    for(int i=0;i<list_of_symbols.size();i++){
+        if(!list_of_symbols[i].is_terminal){
+            cout << endl << "Entries of " << list_of_symbols[i].name << ": " << endl;
+            for(int j=0;j<list_of_symbols.size();j++){
+                if(list_of_symbols[j].is_terminal){
+                    if(parse_table[i][j]!=NULL){
+                        cout << list_of_symbols[j].name << ": ";
+                        for(auto k=parse_table[i][j]->begin();k!=parse_table[i][j]->end();k++){
+                            cout << list_of_symbols[*k].name << " ";
+                        }
+                        cout << endl;
+                    }
+                }
+            }
+        }
+    }
+
+    vector<int> tokens;
+    int token;
+    yyin=fopen("inputfile.txt","r");
+    while ((token=yylex())!=0){
+        cout << token << "\t" << yytext << endl;
+        tokens.push_back(token);
+    }
+    tokens.push_back(name_to_id["eof"]);
+    for(int i=0;i<tokens.size();i++)
+        cout << tokens[i] << " ";
+    cout << endl;
+    return 0;
 }

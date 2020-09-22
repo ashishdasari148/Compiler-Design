@@ -531,37 +531,37 @@ int yy_flex_debug = 0;
 char *yytext;
 #line 1 "tokenize.lex"
 #line 2 "tokenize.lex"
-    #define PLUS 1
-    #define MINUS 2
-    #define PROD 3
-    #define DIV 4
-    #define RELOPEQUAL 5
-    #define LESSTHAN 6
-    #define GREATERTHAN 7
-    #define BRACKETOPEN 12
-    #define BRACKETCLOSE 13
-    #define CURLYBRACKETOPEN 14
-    #define CURLYBRACKETCLOSE 5
-    #define ASSIGNEQUAL 6
-    #define SEMICOLON 7
-    #define AND 12
-    #define ELSE 14
-    #define END 5
-    #define INT_C 6
-    #define ID 7
-    #define IF 12
-    #define INT_ 13
-    #define DO 14
-    #define FLOAT_C 15
-    #define FLOAT_ 16
-    #define NOT 17
-    #define OR 18
-    #define PRINT 19
-    #define PROG 20
-    #define SCAN 17
-    #define STR 18
-    #define THEN 19
-    #define WHILE 20
+    #define PLUS 19
+    #define MINUS 20
+    #define PROD 21
+    #define DIV 22
+    #define RELOPEQUAL 23
+    #define LESSTHAN 24
+    #define GREATERTHAN 25
+    #define BRACKETOPEN 26
+    #define BRACKETCLOSE 27
+    #define CURLYBRACKETOPEN 28
+    #define CURLYBRACKETCLOSE 29
+    #define ASSIGNEQUAL 30
+    #define SEMICOLON 31
+    #define AND 32
+    #define ELSE 33
+    #define END 34
+    #define INT_C 35
+    #define ID 36
+    #define IF 37
+    #define INT_ 38
+    #define DO 39
+    #define FLOAT_C 40
+    #define FLOAT_ 41
+    #define NOT 42
+    #define OR 43
+    #define PRINT 44
+    #define PROG 45
+    #define SCAN 46
+    #define STR 47
+    #define THEN 48
+    #define WHILE 49
 #line 566 "lex.yy.c"
 #line 567 "lex.yy.c"
 
