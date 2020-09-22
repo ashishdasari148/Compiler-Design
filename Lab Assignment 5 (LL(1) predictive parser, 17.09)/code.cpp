@@ -478,8 +478,11 @@ int main() {
     for(int i=0;i<tokens.size();i++)
         cout << tokens[i] << " ";
     cout << endl;*/
-    cout<<"check\n";
+    cout<<"Checking the syntax of input file...\n";
     bool ans=simulate(parse_table,list_of_symbols,name_to_id,start_i);
-    cout<<ans<<endl;
+    if (ans)
+        cout<< "Your input syntax is right...\n";
+    else
+        cout << "Your input syntax is wrong...\n";
     return 0;
 }
