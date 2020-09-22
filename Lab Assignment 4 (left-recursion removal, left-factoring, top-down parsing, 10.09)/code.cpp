@@ -4,15 +4,10 @@ typedef struct symbols{
     string name;
     int id;
     bool is_terminal;
-    // vector<symbols> productions;
 }symbols;
 void traverse(bool *reached, int next_to_consume, vector<int> tokens, vector<int> leaves_of_parse_tree, vector<symbols>list_of_symbols, unordered_map<int,vector<vector<int>>> productions, vector<vector<int>> *tree, unordered_map<string,int> name_to_id){
-    // for(int i=0;i<leaves_of_parse_tree.size();i++)
-    //     cout << list_of_symbols[leaves_of_parse_tree[i]].name << " ";
-    // cout << endl;
     int first_non_terminal = -1;
     bool finished = true;
-    // cout << "Consumed until: " << next_to_consume << endl;
     if(leaves_of_parse_tree.size()<tokens.size())
         finished=false;
     for(int i=next_to_consume;i<leaves_of_parse_tree.size();i++){
@@ -23,7 +18,6 @@ void traverse(bool *reached, int next_to_consume, vector<int> tokens, vector<int
         if(first_non_terminal==-1&&list_of_symbols[leaves_of_parse_tree[i]].is_terminal){
             if(i<tokens.size()){
                 if(leaves_of_parse_tree[i]!=tokens[i]){
-                    // cout << "Mismatch at: " << i << endl;
                     return;
                 }
             }
@@ -36,10 +30,6 @@ void traverse(bool *reached, int next_to_consume, vector<int> tokens, vector<int
     if(finished){
         *reached = true;
         tree->push_back(leaves_of_parse_tree);
-        // cout << "Finished" << endl;
-        // for(int i=0;i<leaves_of_parse_tree.size();i++)
-        //     cout << list_of_symbols[leaves_of_parse_tree[i]].name << " ";
-        // cout << endl;
         return;
     }
     else if(first_non_terminal==-1){
@@ -47,20 +37,15 @@ void traverse(bool *reached, int next_to_consume, vector<int> tokens, vector<int
     }
     for(int j=0;j<productions[leaves_of_parse_tree[first_non_terminal]].size()&&!(*reached);j++){
         vector<int> temp(leaves_of_parse_tree.begin(),leaves_of_parse_tree.end());
-        // cout << first_non_terminal << endl;
         temp.erase(temp.begin()+first_non_terminal);
         if(productions[leaves_of_parse_tree[first_non_terminal]][j][0]!=name_to_id["epsilon"])
             temp.insert(temp.begin()+first_non_terminal, productions[leaves_of_parse_tree[first_non_terminal]][j].begin(), productions[leaves_of_parse_tree[first_non_terminal]][j].end());
-        // for(int i=0;i<temp.size();i++)
-        //     cout << list_of_symbols[temp[i]].name << " ";
-        // cout << endl;
         traverse(reached,first_non_terminal,tokens,temp, list_of_symbols, productions, tree, name_to_id);
         if(*reached){
             tree->push_back(leaves_of_parse_tree);
             return;
         }
     }
-    // cout << "branches ended" << endl;
 }
 int main(){
     int number_of_symbols;
@@ -85,10 +70,6 @@ int main(){
     x.is_terminal = true;
     name_to_id["epsilon"] = list_of_symbols.size();
     list_of_symbols.push_back(x);
-    // for(int i=0;i<number_of_symbols;i++){
-    //     cout << list_of_symbols[i].name << " ";
-    // }
-    // cout << endl;
     int number_of_productions;
     unordered_map<int,vector<vector<int>>> productions;
     int number_of_or_parts;
@@ -121,22 +102,31 @@ int main(){
         }
         cout << endl;
     }
+    cout << endl;
     for(int i=0;i<number_of_symbols;i++){
         if(!list_of_symbols[i].is_terminal){
             for(int j=0;j<i;j++){
                 if(!list_of_symbols[j].is_terminal){
-                    for(auto k=productions[list_of_symbols[i].id].begin();k!=productions[list_of_symbols[i].id].end();k++){
-                        if(k->at(0)==list_of_symbols[j].id){
-                            vector<int> temp(k->begin(),k->end());
-                            temp.erase(temp.begin());
-                            productions[list_of_symbols[i].id].erase(k);
-                            for(auto l=productions[list_of_symbols[j].id].begin();l!=productions[list_of_symbols[j].id].end();l++){
-                                vector<int> temp2(l->begin(), l->end());
-                                temp2.insert(temp2.end(), temp.begin(), temp.end());
-                                productions[list_of_symbols[i].id].push_back(temp2);
+                    bool doer = false;
+                    do{
+                        doer = false;
+                        for(auto k=productions[list_of_symbols[i].id].begin();k!=productions[list_of_symbols[i].id].end();k++){
+                            if(k->at(0)==list_of_symbols[j].id){
+                                vector<int> temp(k->begin(),k->end());
+                                temp.erase(temp.begin());
+                                productions[list_of_symbols[i].id].erase(k);
+                                doer = true;
+                                for(auto l=productions[list_of_symbols[j].id].begin();l!=productions[list_of_symbols[j].id].end();l++){
+                                    vector<int> temp2;
+                                    temp2.clear();
+                                    temp2.insert(temp2.begin(), l->begin(), l->end());
+                                    temp2.insert(temp2.end(), temp.begin(), temp.end());
+                                    productions[list_of_symbols[i].id].push_back(temp2);
+                                }
+                                break;
                             }
                         }
-                    }
+                    }while(doer);
                 }
             }
             bool immediate_left = false;
@@ -184,48 +174,60 @@ int main(){
         }
         cout << endl;
     }
-    for(auto i=productions.begin();i!=productions.end();i++){
-        for(auto j=i->second.begin();j!=i->second.end();j++){
-            int maxmatch=0;
-            for(auto k=j;k!=i->second.end();k++){
-                if(j==k)
-                    continue;
-                int place=0;
-                while(j->size()>place && k->size()>place && j->at(place)==k->at(place)){
-                    // cout << list_of_symbols[j->at(place)].name << " " << list_of_symbols[k->at(place)].name << endl;
-                    place++;
-                }
-                if(place>maxmatch)
-                    maxmatch=place;
-            }
-            if(maxmatch!=0){
-                symbols x;
-                x.name = " " + to_string(list_of_symbols.size()) + " ";
-                x.id = list_of_symbols.size();
-                x.is_terminal = false;
-                name_to_id[" " + to_string(list_of_symbols.size()) + " "] = list_of_symbols.size();
-                list_of_symbols.push_back(x);
-                productions[list_of_symbols.size()-1] = vector<vector<int>>();
-                vector<int> temp(j->begin(),j->begin()+maxmatch);
-                temp.push_back(list_of_symbols.size()-1);
-                i->second.push_back(temp);
+    cout << endl;
+    bool doer;
+    do{
+        doer = false;
+        for(auto i=productions.begin();i!=productions.end();i++){
+            for(auto j=i->second.begin();j!=i->second.end();j++){
+                int maxmatch=0;
                 for(auto k=j;k!=i->second.end();k++){
+                    if(j==k)
+                        continue;
                     int place=0;
-                    while(place<temp.size()&&place<k->size()&&temp[place]==k->at(place)){
+                    
+                    while(j->size()>place && k->size()>place && j->at(place)==k->at(place)){
                         place++;
                     }
-                    if(place==maxmatch){
-                        vector<int> temp1(k->begin()+maxmatch, k->end());
-                        productions[list_of_symbols.size()-1].push_back(temp1);
-                        i->second.erase(k);
-                        if(k==j)
-                            j--;
-                        k--;
-                    }
+                    if(place>maxmatch)
+                        maxmatch=place;
                 }
+                
+                if(maxmatch!=0){
+                    symbols x;
+                    x.name = " " + to_string(list_of_symbols.size()) + " ";
+                    x.id = list_of_symbols.size();
+                    x.is_terminal = false;
+                    name_to_id[" " + to_string(list_of_symbols.size()) + " "] = list_of_symbols.size();
+                    list_of_symbols.push_back(x);
+                    productions[list_of_symbols.size()-1] = vector<vector<int>>();
+                    vector<int> temp(j->begin(),j->begin()+maxmatch);
+                    temp.push_back(list_of_symbols.size()-1);
+                    for(auto k=j;k!=i->second.end();k++){
+                        int place=0;
+                        while(place < temp.size()&&place < k->size()&&temp[place]==k->at(place)){
+                            place++;
+                        }
+                        if(place==maxmatch){
+                            vector<int> temp1(k->begin()+maxmatch, k->end());
+                            if(temp1.size())
+                                productions[list_of_symbols.size()-1].push_back(temp1);
+                            k--;
+                            i->second.erase(k+1);
+                            doer = true;
+                        }
+                    }
+                    i->second.push_back(temp);
+                    if(doer)
+                        break;
+                }
+                if(doer)
+                    break;
             }
+            if(doer)
+                break;
         }
-    }
+    }while(doer);
     cout << endl << "Equivalent Left Factored Grammer:" << endl;
     for(auto i=productions.begin();i!=productions.end();i++){
         cout << list_of_symbols[i->first].name << " = ";
