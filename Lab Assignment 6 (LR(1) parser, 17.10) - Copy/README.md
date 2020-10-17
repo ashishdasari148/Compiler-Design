@@ -1,4 +1,4 @@
-# LL(1) Predictive Parser
+# LR(1) Predictive Parser
 
 This program takes a grammar as an input, 
 - Removes left recursion
@@ -15,7 +15,7 @@ Run the following commands on Terminal/Command Prompt in the assignment director
 For compiling the cpp program:
 
 ```bash
-flex grammar2.lex
+flex grammar1.lex
 g++ code.cpp
 ```
 
@@ -27,7 +27,7 @@ g++ code.cpp
 After the executable is generated from the above command. Run this command in the same directory to execute the program
 
 ```bash
-./a.out grammar2.txt inputfile3.txt
+./a.out grammar1.txt inputfile1.txt
 ```
 
 
@@ -40,15 +40,8 @@ The definition of grammar should be in the following format in the .txt file.
     line 1: <number_of_symbols>
         next number_of_symbols lines: <symbol> <1(if terminal)/0(if non-terminal)>
     next line: <number_of_productions>
-        next number_of_productions sections:
-            <left symbol>
-            <number_of_or_parts>
-                next number_of_or_parts subsections: 
-                    <number_of_symbols_in_this_part>
-                    <space separated number_of_symbols_in_this_part symbols>
-    (next is optional)
-    next line: <number_of_tokens> <start symbol>
-    <space separated number_of_tokens tokens>
+        next number_of_productions lines: of form A -> alpha
+    next line: <start symbol>
 
 Points to Note :
 - If a new symbol is added to the grammar due to the removal of left recursion then the new symbol is <oldsymbol'\>
@@ -59,7 +52,7 @@ To simulate and check if a given input satisfies the syntax of the given languag
 ## Example inputs to the program
 >After executing these commands, the program asks for the file name as input (to simulate). Four input files are provided in the directory as inputfile1.txt, inputfile2.txt, inputfile3.txt, inputfile4.txt
 
-Input - 1: (Small Grammar and Correct Syntax)
+Input - 1: (Grammar 1 and Correct Syntax)
 
 ```bash
 flex grammar1.lex
@@ -67,7 +60,7 @@ g++ code.cpp
 ./a.out grammar1.txt inputfile1.txt
 ```
 
-Input - 2: (Small Grammar and Wrong Syntax)
+Input - 2: (Grammar 1 and Wrong Syntax)
 
 ```bash
 flex grammar1.lex
@@ -75,7 +68,7 @@ g++ code.cpp
 ./a.out grammar1.txt inputfile2.txt
 ```
  
-Input - 3: (Large Grammar and Wrong Syntax)
+Input - 3: (Grammar 2 and Wrong Syntax)
 
 ```bash
 flex grammar2.lex
@@ -83,7 +76,7 @@ g++ code.cpp
 ./a.out grammar2.txt inputfile3.txt
 ```
 
-Input - 4: (Large Grammar and Correct Syntax)
+Input - 4: (Grammar 2 and Correct Syntax)
 
 ```bash
 flex grammar2.lex
