@@ -529,8 +529,8 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "tokenize.lex"
-#line 2 "tokenize.lex"
+#line 1 "grammar2.lex"
+#line 2 "grammar2.lex"
     #define PLUS 19
     #define MINUS 20
     #define PROD 21
@@ -780,7 +780,7 @@ YY_DECL
 		}
 
 	{
-#line 66 "tokenize.lex"
+#line 66 "grammar2.lex"
 
 #line 786 "lex.yy.c"
 
@@ -841,173 +841,173 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 67 "tokenize.lex"
+#line 67 "grammar2.lex"
 {return PLUS;}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 68 "tokenize.lex"
+#line 68 "grammar2.lex"
 {return MINUS;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 69 "tokenize.lex"
+#line 69 "grammar2.lex"
 {return PROD;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 70 "tokenize.lex"
+#line 70 "grammar2.lex"
 {return DIV;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 71 "tokenize.lex"
+#line 71 "grammar2.lex"
 {return RELOPEQUAL;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 72 "tokenize.lex"
+#line 72 "grammar2.lex"
 {return LESSTHAN;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 73 "tokenize.lex"
+#line 73 "grammar2.lex"
 {return GREATERTHAN;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 74 "tokenize.lex"
+#line 74 "grammar2.lex"
 {return BRACKETOPEN;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 75 "tokenize.lex"
+#line 75 "grammar2.lex"
 {return BRACKETCLOSE;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 76 "tokenize.lex"
+#line 76 "grammar2.lex"
 {return CURLYBRACKETOPEN;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 77 "tokenize.lex"
+#line 77 "grammar2.lex"
 {return CURLYBRACKETCLOSE;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 78 "tokenize.lex"
+#line 78 "grammar2.lex"
 {return ASSIGNEQUAL;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 79 "tokenize.lex"
+#line 79 "grammar2.lex"
 {return SEMICOLON;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 80 "tokenize.lex"
+#line 80 "grammar2.lex"
 {return AND;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 81 "tokenize.lex"
+#line 81 "grammar2.lex"
 {return ELSE;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 82 "tokenize.lex"
+#line 82 "grammar2.lex"
 {return END;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 83 "tokenize.lex"
+#line 83 "grammar2.lex"
 {return INT_C;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 84 "tokenize.lex"
+#line 84 "grammar2.lex"
 {return IF;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 85 "tokenize.lex"
+#line 85 "grammar2.lex"
 {return INT_;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 86 "tokenize.lex"
+#line 86 "grammar2.lex"
 {return DO;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 87 "tokenize.lex"
+#line 87 "grammar2.lex"
 {return FLOAT_C;}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 88 "tokenize.lex"
+#line 88 "grammar2.lex"
 {return FLOAT_;}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 89 "tokenize.lex"
+#line 89 "grammar2.lex"
 {return NOT;}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 90 "tokenize.lex"
+#line 90 "grammar2.lex"
 {return OR;}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 91 "tokenize.lex"
+#line 91 "grammar2.lex"
 {return PRINT;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 92 "tokenize.lex"
+#line 92 "grammar2.lex"
 {return PROG;}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 93 "tokenize.lex"
+#line 93 "grammar2.lex"
 {return SCAN;}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 94 "tokenize.lex"
+#line 94 "grammar2.lex"
 {return THEN;}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 95 "tokenize.lex"
+#line 95 "grammar2.lex"
 {return WHILE;}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 96 "tokenize.lex"
+#line 96 "grammar2.lex"
 {return ID;}
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 97 "tokenize.lex"
+#line 97 "grammar2.lex"
 {return STR;}
 	YY_BREAK
 case 32:
 /* rule 32 can match eol */
 YY_RULE_SETUP
-#line 98 "tokenize.lex"
+#line 98 "grammar2.lex"
 {}
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 99 "tokenize.lex"
+#line 99 "grammar2.lex"
 {return -1;}
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 100 "tokenize.lex"
+#line 100 "grammar2.lex"
 ECHO;
 	YY_BREAK
 #line 1014 "lex.yy.c"
@@ -2015,7 +2015,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 100 "tokenize.lex"
+#line 100 "grammar2.lex"
 
 int yywrap(void) {return 1;}
 
