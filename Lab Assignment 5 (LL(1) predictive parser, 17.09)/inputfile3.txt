@@ -18,7 +18,7 @@ prog
 		end
 		
 		while count>2.3
-		do sum = sum – 1;
+		do sum = sum - 1;
 		end
 	end
 	

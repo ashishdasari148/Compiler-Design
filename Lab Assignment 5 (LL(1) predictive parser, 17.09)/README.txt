@@ -1,3 +1,65 @@
+The file "code.cpp" contains code that takes a grammar G and:
+Removes left-recursion from grammar G
+Produces an equivalent left-factored grammar
+Computes FIRST and FOLLOW sets of the symbols in the grammar
+Takes a vector of tokens and gives the parse tree (if any)
+
+Things to keep in mind:
+While producing left-factored grammar, the new symbols generated are of format:
+"<space><integer(same as new id generated)><space>"
+
+-------------------------------------------------------------------------------------------------------------
+Input Format-------------------------------------------------------------------------------------------------
+line 1: <number_of_symbols>
+    next number_of_symbols lines: <symbol> <1(if terminal)/0(if non-terminal)>
+next line: <number_of_productions>
+    next number_of_productions sections:
+        <left symbol>
+        <number_of_or_parts>
+            next number_of_or_parts subsections: 
+                <number_of_symbols_in_this_part>
+                <space separated number_of_symbols_in_this_part symbols>
+next line: <start symbol>
+
+vector of tokens is taken from the file <inputfile.txt> (default: negative test case)
+paste the contents of inputfileyes.txt in inputfile.txt for positive test case
+paste the contents of inputfileno.txt in inputfile.txt for negative test case
+
+-------------------------------------------------------------------------------------------------------------
+SAMPLE INPUT 1 (to check the correctness of FIRST sets, FOLLOW sets and parse table)-------------------------
+8
+E 0
+T 0
+F 0
++ 1
+* 1
+id 1
+( 1
+) 1
+3
+E
+2
+3
+E + T
+1
+T
+T
+2
+3
+T * F
+1
+F
+F
+2
+3
+( E )
+1
+id
+
+P
+
+-------------------------------------------------------------------------------------------------------------
+SAMPLE INPUT 2 (large grammar, to check the Simulation of Non-recursive predictive parsing)------------------
 50
 AE 0
 BE 0
@@ -174,36 +236,3 @@ ic
 fc
 
 P
-
-
-
--------------------------------------------------------------------------------------------------------------
--------------------------------------------------------------------------------------------------------------
-8
-E 0
-T 0
-F 0
-+ 1
-* 1
-id 1
-( 1
-) 1
-3
-E
-2
-3
-E + T
-1
-T
-T
-2
-3
-T * F
-1
-F
-F
-2
-3
-( E )
-1
-id

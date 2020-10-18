@@ -70,6 +70,15 @@ int main(){
     x.is_terminal = true;
     name_to_id["epsilon"] = list_of_symbols.size();
     list_of_symbols.push_back(x);
+    x.name = "eof";
+    x.id = list_of_symbols.size();
+    x.is_terminal = true;
+    name_to_id["eof"] = list_of_symbols.size();
+    list_of_symbols.push_back(x);
+    // for(int i=0;i<number_of_symbols;i++){
+    //     cout << list_of_symbols[i].name << " ";
+    // }
+    // cout << endl;
     int number_of_productions;
     unordered_map<int,vector<vector<int>>> productions;
     int number_of_or_parts;
@@ -112,6 +121,27 @@ int main(){
                         doer = false;
                         for(auto k=productions[list_of_symbols[i].id].begin();k!=productions[list_of_symbols[i].id].end();k++){
                             if(k->at(0)==list_of_symbols[j].id){
+                                // cout << list_of_symbols[i].name << " " << list_of_symbols[j].name << endl;
+
+                                // cout << list_of_symbols[i].name << " = ";
+                                // for(int m=0;m<productions[i].size();m++){
+                                //     for(int n=0;n<productions[i][m].size();n++){
+                                //         cout << list_of_symbols[productions[i][m][n]].name;
+                                //     }
+                                //     if(m!=productions[i].size()-1)
+                                //         cout << " | ";
+                                // }
+                                // cout << endl;
+                                // cout << list_of_symbols[j].name << " = ";
+                                // for(int m=0;m<productions[j].size();m++){
+                                //     for(int n=0;n<productions[j][m].size();n++){
+                                //         cout << list_of_symbols[productions[j][m][n]].name;
+                                //     }
+                                //     if(m!=productions[j].size()-1)
+                                //         cout << " | ";
+                                // }
+                                // cout << endl;
+
                                 vector<int> temp(k->begin(),k->end());
                                 temp.erase(temp.begin());
                                 productions[list_of_symbols[i].id].erase(k);
@@ -121,8 +151,20 @@ int main(){
                                     temp2.clear();
                                     temp2.insert(temp2.begin(), l->begin(), l->end());
                                     temp2.insert(temp2.end(), temp.begin(), temp.end());
+                                    // for(int m=0;m<temp2.size();m++)
+                                    //     cout << list_of_symbols[temp2[m]].name;
+                                    // cout << endl;
                                     productions[list_of_symbols[i].id].push_back(temp2);
                                 }
+                                // cout << list_of_symbols[i].name << " = ";
+                                // for(int m=0;m<productions[i].size();m++){
+                                //     for(int n=0;n<productions[i][m].size();n++){
+                                //         cout << list_of_symbols[productions[i][m][n]].name;
+                                //     }
+                                //     if(m!=productions[i].size()-1)
+                                //         cout << " | ";
+                                // }
+                                // cout << endl;
                                 break;
                             }
                         }
@@ -187,6 +229,7 @@ int main(){
                     int place=0;
                     
                     while(j->size()>place && k->size()>place && j->at(place)==k->at(place)){
+                        // cout << list_of_symbols[j->at(place)].name << " " << list_of_symbols[k->at(place)].name << endl;
                         place++;
                     }
                     if(place>maxmatch)
@@ -194,6 +237,7 @@ int main(){
                 }
                 
                 if(maxmatch!=0){
+                    // cout << "Maxmatch: " << maxmatch << endl;
                     symbols x;
                     x.name = " " + to_string(list_of_symbols.size()) + " ";
                     x.id = list_of_symbols.size();
@@ -201,22 +245,40 @@ int main(){
                     name_to_id[" " + to_string(list_of_symbols.size()) + " "] = list_of_symbols.size();
                     list_of_symbols.push_back(x);
                     productions[list_of_symbols.size()-1] = vector<vector<int>>();
+                    // vector<vector<int>> tempproduction;
                     vector<int> temp(j->begin(),j->begin()+maxmatch);
                     temp.push_back(list_of_symbols.size()-1);
+                    // cout << "J size() : " << j->size() << endl;
+                    // cout << "here...\n";
                     for(auto k=j;k!=i->second.end();k++){
                         int place=0;
+                        // cout << "here''\n";
+                        // cout << k->size() << endl;
+                        // for(int n=0;n<k->size();n++)
+                        //     cout << list_of_symbols[k->at(n)].name << " ";
                         while(place < temp.size()&&place < k->size()&&temp[place]==k->at(place)){
                             place++;
                         }
+                        // cout << "Place: " << place << endl;
                         if(place==maxmatch){
                             vector<int> temp1(k->begin()+maxmatch, k->end());
                             if(temp1.size())
                                 productions[list_of_symbols.size()-1].push_back(temp1);
+                            else
+                            {
+                                temp1.push_back(name_to_id["epsilon"]);
+                                productions[list_of_symbols.size()-1].push_back(temp1);
+                            }
+                            
+                            // tempproduction.push_back(temp1);
                             k--;
+                            // if(k==j)
+                            //     j--;
                             i->second.erase(k+1);
                             doer = true;
                         }
                     }
+                    // productions[list_of_symbols.size()-1] = tempproduction;
                     i->second.push_back(temp);
                     if(doer)
                         break;
