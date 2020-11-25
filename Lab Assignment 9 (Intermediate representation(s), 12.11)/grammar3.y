@@ -76,7 +76,6 @@ int addNode(float data, int left, int right, int isChar) {
     return node_count;
 }
 void printDAG() {
-    printf("The DAG is: \n");
     for (int i = 1; i <= node_count; i++) {
         printf("Node %d:\n", i);
         if (node_data[i].is_char) {
