@@ -37,7 +37,7 @@ minus ([-])
 prod ([*])
 div ([/])
 relopequal ([=])
-lessthen ([<])
+lessthan ([<])
 greaterthan ([>])
 bracketopen ([(])
 bracketclose ([)])
@@ -69,7 +69,7 @@ while (while)
 {prod} {return PROD;}
 {div} {return DIV;}
 {relopequal} {return RELOPEQUAL;}
-{lessthen} {return LESSTHAN;}
+{lessthan} {return LESSTHAN;}
 {greaterthan} {return GREATERTHAN;}
 {bracketopen} {return BRACKETOPEN;}
 {bracketclose} {return BRACKETCLOSE;}
